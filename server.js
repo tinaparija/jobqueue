@@ -19,21 +19,21 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function (req, res) {
-  res.sendFile('views/index.html' , { root : __dirname});
+    res.sendFile('views/index.html' , { root : __dirname});
 });
 
 app.get('/api', function (req, res) {
-  db.Record.find({}, function(err, records) {
-      res.json(records);
-  });
+    db.Record.find({}, function(err, records) {
+        res.json(records);
+    });
 });
 
 app.get('/api/:id', function (req, res) {
-  db.Record.findOne({_id:req.params.id}, function(err, record){
-      if (err) {console.log("Couldn't find selected record.")
-        return;
-      }
-      res.json(record);
+    db.Record.findOne({_id:req.params.id}, function(err, record){
+        if (err) {console.log("Couldn't find selected record.")
+            return;
+        }
+        res.json(record);
     });
 });
 

@@ -27,6 +27,5 @@ $(document).ready(function(){
   function onPut(json){
     $('#jobData').html(json.jobHTML)
   }
-
 });
 
