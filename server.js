@@ -37,19 +37,22 @@ app.get('/api/:id', function (req, res) {
     });
 });
 
-function finishJob(url, id){ 
-    axios.get(url).then(function(response){
+jobQueue = []
+
+app.put('/api/:id', function(req, res){
+    currentJobURL = jobQueue.shift()
+    axios.get(currentJobURL).then(function(response){
         stringData =`${response.data}`
-        db.Record.findOne({_id:id}, function (err, foundRecord){
+        db.Record.findOne({_id:req.params.id}, function (err, foundRecord){
             if(err){console.log("Error findind record to update.")}
             foundRecord.jobHTML = stringData; 
             foundRecord.save(function(err, savedRecord){
                 if(err) {console.log('Error saving updated record.')}
-                console.log("updated record");
+                res.json(savedRecord)
             })
         })
     })
-}
+});
 
 app.post('/api', function (req, res){
     let jobURL = req.body.userInput;
@@ -58,9 +61,7 @@ app.post('/api', function (req, res){
     })
     record.save(function(err, record){
         if(err) {return console.log(err);}
-        res.json(record) 
-    }).then(function(){
-        finishJob(jobURL, record._id); 
+        res.json(record)
     });
 });
 
