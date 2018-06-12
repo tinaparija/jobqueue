@@ -15,7 +15,6 @@ $(document).ready(function(){
   function onPost(json){
     $('#jobID').html(json._id); 
     $('#jobData').html(json.jobHTML);
-    e.preventDefault()
     $.ajax({
         method: 'PUT',
         url:`/api/${json._id}`,

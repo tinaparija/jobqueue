@@ -32,7 +32,7 @@ app.get('/api/:id', function (req, res) {
     db.Record.findOne({_id:req.params.id}, function(err, record){
         if (err) {console.log("Couldn't find selected record.")
             return;
-        }
+      }
         res.json(record);
     });
 });
@@ -56,6 +56,7 @@ app.put('/api/:id', function(req, res){
 
 app.post('/api', function (req, res){
     let jobURL = req.body.userInput;
+    jobQueue.push(jobURL);
     record = db.Record({
         jobHTML: "Job has not been completed yet."
     })
